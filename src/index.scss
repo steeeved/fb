@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
+
+:root {
+  --main-font: 'Poppins', sans-serif;
+  --heading-font: 'Titillium Web', sans-serif;
+  --display-font: 'Baloo 2', cursive;
+
+  --navBar-main: #ff1694;
+  --navBar-hover: #9e4244;
+  --navBar-darker: #3d1313;
+
+  --body-main: #ffffff;
+  --post-main: #f5fefd;
+  --description: #f2b8c6;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--body-main);
+  align-items: center;
+}
