@@ -1,0 +1,53 @@
+.navBar {
+  margin: 0;
+  height: 4rem;
+  background-color: var(--navBar-main);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 70px;
+
+  .user {
+    p {
+      color: var(--navBar-darker);
+      font-family: var(--heading-font);
+      font-size: 20px;
+      font-weight: 600;
+      margin-left: 20px;
+    }
+  }
+
+  .right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .button {
+    text-decoration: none;
+    font-size: 20px;
+    font-family: var(--main-font);
+    letter-spacing: 1.5;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    background-color: #fff;
+    padding: 5px;
+    color: #000;
+    margin: 0 20px;
+    transition: all;
+
+    &:hover {
+      background-color: #000;
+      color: var(--navBar-hover);
+    }
+  }
+}
+
+.image {
+  width: 2.7rem;
+  height: 2.7rem;
+  margin: 0 20px;
+  padding: 5px;
+}
