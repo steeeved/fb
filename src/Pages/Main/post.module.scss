@@ -1,0 +1,102 @@
+.main {
+  display: flex;
+  padding: 10px 0;
+  margin: 10px;
+  flex-direction: column;
+  align-self: center;
+  border: 1px solid var(--navBar-hover);
+  border-radius: 3px;
+  background: var(--post-main);
+  width: 80vh;
+  height: auto;
+
+  .head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--navBar-hover);
+    padding: 0 10px;
+
+    h1 {
+      color: var(--navBar-main);
+      font-family: var(--heading-font);
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    width: 100%;
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      h4 {
+        font-family: var(--heading-font);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--navBar-hover);
+        border-bottom: 1.5px solid var(--navBar-hover);
+      }
+    }
+
+    .description {
+      background-color: #f2b8c6;
+      margin: 10px 15px;
+      border-radius: 3px;
+      height: auto;
+      display: flex;
+      justify-content: flex-start;
+      padding: 5px;
+
+      p {
+        font-family: var(--display-font);
+        font-size: 15px;
+        font-weight: 300;
+        color: black;
+      }
+    }
+  }
+  .like {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 15px;
+
+    button {
+      background-color: var(--post-main);
+      border: none;
+      border-radius: 3px;
+      color: var(--navBar-hover);
+      font-family: var(--heading-font);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    p {
+      font-family: var(--heading-font);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navBar-hover);
+      padding: 5px 10px;
+    }
+  }
+}
+
+.Posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  background: var(--body-main);
+}
