@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.Form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px;
+  
+  form {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      background-color: rgb(32, 31, 31);
+      padding: 20px;
+      gap: 1rem;
+      font-family: 'Poppins', sans-serif;
+
+    input,
+    textarea {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      height: 30px;
+      outline: none;
+    }
+
+    textarea {
+      height: 100px;
+    }
+
+    input[type='submit'] {
+      background-color: rgb(28, 2, 53);
+      color: white;
+      border: 1px solid white;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      text-align: center;
+
+      &:hover {
+        background-color: white;
+        color: rgb(28, 2, 53);
+      }
+    }
+  }
+}
