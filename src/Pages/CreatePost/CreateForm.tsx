@@ -31,10 +31,31 @@ export const CreateForm = () => {
     await addDoc(postsCollection, {
       ...data,
       username: user?.displayName,
-      userId: user?.uid
+      userId: user?.uid,
+      day: getTime().day,
+      time: getTime().time,
+      exactMinute: getTime().exactMinute,
+      exactHour: getTime().exactHour,
+      exactDayName: getTime().exactDayName,
     });
     navigate('/');
   };
+
+  function getTime() {
+    const date = new Date();
+    const exactHour = date.getHours();
+    const exactMinute = date.getMinutes();
+    const time = date.toLocaleTimeString();
+    const day = date.toLocaleDateString();
+    const exactDayName = date.toLocaleString('default', { weekday: 'long' });
+    return {
+      day: day,
+      time: time,
+      exactMinute: exactMinute,
+      exactHour: exactHour,
+      exactDayName: exactDayName
+    }
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
