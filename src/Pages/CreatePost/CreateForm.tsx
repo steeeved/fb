@@ -37,6 +37,7 @@ export const CreateForm = () => {
       exactMinute: getTime().exactMinute,
       exactHour: getTime().exactHour,
       exactDayName: getTime().exactDayName,
+      exactDate: getTime().exactDate
     });
     navigate('/');
   };
@@ -47,13 +48,15 @@ export const CreateForm = () => {
     const exactMinute = date.getMinutes();
     const time = date.toLocaleTimeString();
     const day = date.toLocaleDateString();
+    const exactDate = date.getDate();    
     const exactDayName = date.toLocaleString('default', { weekday: 'long' });
     return {
       day: day,
       time: time,
       exactMinute: exactMinute,
       exactHour: exactHour,
-      exactDayName: exactDayName
+      exactDayName: exactDayName,
+      exactDate: exactDate,
     }
   }
 
