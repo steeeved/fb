@@ -16,6 +16,9 @@ const MainPage = () => {
     );
   };
 
+  console.log(postsList);
+  
+
   useEffect(() => {
     getPosts();
   }, []);
