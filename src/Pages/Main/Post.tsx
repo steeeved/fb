@@ -8,7 +8,19 @@ import { useQuery } from '@tanstack/react-query';
 
 export const Post = (props: IPostProps) => {
   const {
-    post: { title, username, description, userId, id, day, time, exactHour, exactDayName, exactMinute } 
+    post: {
+      title,
+      username,
+      description,
+      userId,
+      id,
+      day,
+      time,
+      exactHour,
+      exactDayName,
+      exactMinute,
+      exactDate
+    }
   } = props;
   const [user] = useAuthState(auth);
   const likesCollection = collection(db, 'likes');
@@ -31,21 +43,21 @@ export const Post = (props: IPostProps) => {
   const { isLoading } = useQuery(['likes'], getLikes);
 
   useEffect(() => {
-    getLikes(); 
+    getLikes();
     setAnother(true);
   }, [liked]);
 
   const addLike = async () => {
     await addDoc(likesCollection, {
       userId: user?.uid,
-      postId: id,
+      postId: id
     });
     console.log('Clicked');
     setLiked(!liked);
   };
 
   const handleLoading = () => {
-    if (isLoading === true || another === true ) {
+    if (isLoading === true || another === true) {
       return setRealLoading(true);
     } else {
       return setRealLoading(false);
@@ -60,9 +72,8 @@ export const Post = (props: IPostProps) => {
     //get exact hour
     const exactHrs = new Date().getHours();
     const hoursAgo = exactHrs - exactHour;
-    return {hoursAgo: hoursAgo
-  }
-  } 
+    return { hoursAgo: hoursAgo };
+  };
 
   const calcMinutes = () => {
     //get exact minute
@@ -70,8 +81,24 @@ export const Post = (props: IPostProps) => {
     const minutesAgo = exactMin - exactMinute;
     return {
       minutesAgo: minutesAgo
-    }
-  }
+    };
+  };
+
+  const calcDays = () => {
+    //get exact day
+    const exactDay = new Date().getDate();
+    const daysAgo = exactDay - exactDate;
+    return {
+      daysAgo: daysAgo
+    };
+  };
+
+  const minHours = () => {
+    if (calcHours().hoursAgo >= 1)
+      return <h5>{`${calcHours().hoursAgo} hrs ago`}</h5>;
+    if (calcHours().hoursAgo < 1)
+      return <h5>{`${calcMinutes().minutesAgo} mins ago`}</h5>;
+  };
 
   return (
     <div className={Styles.main} key={userId}>
@@ -80,15 +107,16 @@ export const Post = (props: IPostProps) => {
           <h1>@{username}</h1>
         </div>
         <div className={Styles.time}>
-          {calcHours().hoursAgo >= 1 ?  <h5>{`${calcHours().hoursAgo} hrs ago`}</h5> :
-          <h5>{`${calcMinutes().minutesAgo} mins ago`}</h5>}
-          {/* <div className={Styles.day}>
-            <h4>Friday</h4>
-            <div className={Styles.below}>
-              <p>12/8/2020</p>
-              <p>at 12.09.8pm</p>
+          {calcDays().daysAgo >= 1 ? (
+            <div className={Styles.day}>
+              <h4>{exactDayName}</h4>
+              <div className={Styles.below}>
+                <p>{`${day} at ${time}`}</p>
+              </div>
             </div>
-          </div> */}
+          ) : (
+            <>{minHours()}</>
+          )}
         </div>
       </div>
       <div className={Styles.body}>
