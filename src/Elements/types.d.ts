@@ -25,9 +25,13 @@ export interface IFirebase {
 
 export interface IPostProps {
   post: IFirebase;
-  
 }
 
 export interface IPost {
   sortedPosts: IFirebase;
+}
+
+export interface ILike {
+  userId: string;
+  likeId: string;
 }
