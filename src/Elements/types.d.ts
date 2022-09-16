@@ -18,9 +18,16 @@ export interface IFirebase {
   exactMinute: number;
   exactHour: number;
   exactDayName: string;
+  exactDate: number;
   time: string;
+  postId: number;
 }
 
 export interface IPostProps {
   post: IFirebase;
+  
+}
+
+export interface IPost {
+  sortedPosts: IFirebase;
 }
