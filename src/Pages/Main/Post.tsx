@@ -4,43 +4,92 @@ import { addDoc, getDocs, collection, query, where } from 'firebase/firestore';
 import { auth, db } from '../../Config/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 export const Post = (props: IPostProps) => {
   const {
-    post: { title, username, description, userId, id }
+    post: { title, username, description, userId, id, day, time, exactHour, exactDayName, exactMinute } 
   } = props;
   const [user] = useAuthState(auth);
   const likesCollection = collection(db, 'likes');
   const likes = query(likesCollection, where('postId', '==', id));
   const [likeAmount, setLikeAmount] = useState<number | null>(null);
+  const [greaterThan, setGreaterThan] = useState<boolean | null>(null);
   const [liked, setLiked] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<string>('Loading...');
+  const [realLoading, setRealLoading] = useState<boolean | null>(null);
+  const [another, setAnother] = useState<boolean>(false);
 
   const getLikes = async () => {
+    // const data = await getDocs(likes);
+    // setLikeAmount(data.docs.length);
     const data = await getDocs(likes);
     setLikeAmount(data.docs.length);
+    setAnother(false);
   };
 
-  const [loading, setLoading] = useState<string>("Loading...");
+  const { isLoading } = useQuery(['likes'], getLikes);
 
   useEffect(() => {
-    getLikes();
+    getLikes(); 
+    setAnother(true);
   }, [liked]);
 
   const addLike = async () => {
     await addDoc(likesCollection, {
       userId: user?.uid,
       postId: id,
-      isLoading: true
     });
+    console.log('Clicked');
     setLiked(!liked);
-    setIsLoading(!isLoading);
   };
+
+  const handleLoading = () => {
+    if (isLoading === true || another === true ) {
+      return setRealLoading(true);
+    } else {
+      return setRealLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    handleLoading();
+  }, [liked]);
+
+  const calcHours = () => {
+    //get exact hour
+    const exactHrs = new Date().getHours();
+    const hoursAgo = exactHrs - exactHour;
+    return {hoursAgo: hoursAgo
+  }
+  } 
+
+  const calcMinutes = () => {
+    //get exact minute
+    const exactMin = new Date().getMinutes();
+    const minutesAgo = exactMin - exactMinute;
+    return {
+      minutesAgo: minutesAgo
+    }
+  }
 
   return (
     <div className={Styles.main} key={userId}>
       <div className={Styles.head}>
-        <h1>@{username}</h1>
+        <div className={Styles.username}>
+          <h1>@{username}</h1>
+        </div>
+        <div className={Styles.time}>
+          {calcHours().hoursAgo >= 1 ?  <h5>{`${calcHours().hoursAgo} hrs ago`}</h5> :
+          <h5>{`${calcMinutes().minutesAgo} mins ago`}</h5>}
+          {/* <div className={Styles.day}>
+            <h4>Friday</h4>
+            <div className={Styles.below}>
+              <p>12/8/2020</p>
+              <p>at 12.09.8pm</p>
+            </div>
+          </div> */}
+        </div>
       </div>
       <div className={Styles.body}>
         <div className={Styles.title}>
@@ -51,12 +100,12 @@ export const Post = (props: IPostProps) => {
         </div>
       </div>
       <div className={Styles.like}>
-        {isLoading ? (
-          <button onClick={addLike}>{ loading}</button>
-          ) : (
+        {realLoading ? (
+          <button>{loading}</button>
+        ) : (
           <button onClick={addLike}>&#128077; </button>
         )}
-        {liked ? null : likeAmount && <p>{likeAmount}</p>  }
+        {likeAmount && <p>{likeAmount}</p>}
       </div>
     </div>
   );
