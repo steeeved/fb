@@ -14,6 +14,11 @@ export interface IFirebase {
   title: string;
   username: string;
   description: string;
+  day: string;
+  exactMinute: number;
+  exactHour: number;
+  exactDayName: string;
+  time: string;
 }
 
 export interface IPostProps {
