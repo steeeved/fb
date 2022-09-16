@@ -7,6 +7,7 @@ import Styles from './post.module.scss';
 
 const MainPage = () => {
   const [postsList, setPostsList] = useState<IFirebase[] | null>(null);
+  const [sortedPosts, setSortedPosts] = useState<IFirebase[] | null>(null);
   const postsCollection = collection(db, 'posts');
 
   const getPosts = async () => {
@@ -16,17 +17,32 @@ const MainPage = () => {
     );
   };
 
-  console.log(postsList);
-  
-
   useEffect(() => {
     getPosts();
   }, []);
 
+  // Sort postsList by day
+  useEffect(() => {
+    if (postsList) {
+      const sorted = postsList.sort((a, b) => {
+        if (a.day > b.day) {
+          return 1;
+        } else if (a.day < b.day) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+      // reverse the array so that the most recent post is at the top
+      setSortedPosts(sorted.reverse());
+    }
+  }, [postsList]);
+
+
   return (
     <div className={Styles.Posts}>
-      {postsList?.map((post) => (
-        <Post post={post}/>
+      {sortedPosts?.map((post) => (
+        <Post post={post} />
       ))}
     </div>
   );
